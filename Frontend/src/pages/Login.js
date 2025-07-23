@@ -4,8 +4,51 @@ import logo from "../assets/images/Logo.png";
 import googlesvg from "../assets/images/google.svg";
 import LoginMockupSection from "../components/Login/LoginMockupSection";
 import LoginOptionsSection from "../components/Login/LoginOptionsSection";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { API } from "../api";
 
 function Login() {
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setCheckingAuth(false);
+        return;
+      }
+      try {
+        const res = await fetch(API.getUser, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          // Token is valid, redirect to loading
+          navigate("/loading");
+        } else {
+          // Invalid/expired token
+          localStorage.removeItem("token");
+          setCheckingAuth(false);
+        }
+      } catch (e) {
+        localStorage.removeItem("token");
+        setCheckingAuth(false);
+      }
+    };
+    checkToken();
+  }, [navigate]);
+
+  if (checkingAuth) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <span className="text-lg font-semibold">
+          Checking authentication...
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className="login-page bg-white min-h-screen flex flex-col items-center justify-center">
       {/* main content: responsive flex direction */}

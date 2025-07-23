@@ -3,7 +3,7 @@ import logo from "../assets/images/Logo.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import User from "../models/User";
-import { API } from "../api";
+import { API, fetchNotes } from "../api";
 
 function Loading() {
   const [progress, setProgress] = useState(0);
@@ -28,12 +28,20 @@ function Loading() {
         },
       })
         .then((res) => res.json())
-        .then((data) => {
+        .then(async (data) => {
           setProgress(100);
-          setTimeout(() => {
+          setTimeout(async () => {
             const user = User.fromJson(data);
             console.log("Loading - User:", user.toString());
-            navigate("/home", { state: { user } });
+            // Fetch notes for the user
+            let notes = [];
+            try {
+              notes = await fetchNotes(token);
+            } catch (e) {
+              console.log("Failed to fetch notes", e);
+            }
+            // Pass notes to Home
+            navigate("/home", { state: { user, notes } });
           }, 300);
         })
         .catch(() => {

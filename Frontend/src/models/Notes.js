@@ -1,25 +1,29 @@
-
-
 class Notes {
-  constructor(content, date, month, year, color) {
+  constructor(content, _id, userId, updatedAt, color) {
     this.content = content;
-    this.date = date;
-    this.month = month;
-    this.year = year;
+    this._id = _id;
+    this.userId = userId;
+    this.updatedAt = updatedAt;
     this.color = color;
   }
 
   static fromJson(json) {
-    return new Notes(json.content, json.date, json.month, json.year, json.color);
+    return new Notes(
+      json.content,
+      json._id,
+      json.userId,
+      json.updatedAt,
+      json.color
+    );
   }
 
   toJson() {
     return {
       content: this.content,
-      date: this.date,
-      month: this.month,
-      year: this.year,
-      color: this.color
+      updatedAt: this.updatedAt,
+      color: this.color,
+      _id: this._id,
+      userId: this.userId,
     };
   }
 }
