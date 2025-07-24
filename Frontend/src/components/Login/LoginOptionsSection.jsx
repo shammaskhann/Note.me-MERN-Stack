@@ -2,12 +2,24 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { API } from "../../api";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function LoginOptionsSection({ logo, googlesvg }) {
+  const navigate = useNavigate();
   // Handler for Google Sign-In
   const handleGoogleSignIn = () => {
     // Redirect to backend Google OAuth endpoint
     window.location.href = API.googleAuth;
+  };
+
+  let [username, setUsername] = useState("");
+
+  const handleAnonymousSignIn = () => {
+    // Redirect to backend Anonymous Sign-In endpoint
+    localStorage.setItem("token", "anonymous");
+    localStorage.setItem("username", username);
+    navigate("/loading");
   };
 
   return (
@@ -33,11 +45,16 @@ function LoginOptionsSection({ logo, googlesvg }) {
       {/* Username input and Sign Up Button */}
       <div className="flex flex-col items-center justify-center w-full md:w-3/4 space-y-4">
         <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           type="text"
           placeholder="Enter your username"
           className="w-full p-2 rounded-lg border border-gray-500 dark:border-gray-700 text-gray-500 dark:text-gray-400 placeholder:text-gray-500 dark:placeholder:text-gray-400 text-lg font-ubuntu"
         />
-        <button className="flex items-center justify-center w-full text-white text-lg font-bold px-6 py-3 rounded-lg shadow-md hover:bg-custom-green-hover transition duration-300 font-ubuntu bg-custom-green">
+        <button
+          className="flex items-center justify-center w-full text-white text-lg font-bold px-6 py-3 rounded-lg shadow-md hover:bg-custom-green-hover transition duration-300 font-ubuntu bg-custom-green"
+          onClick={handleAnonymousSignIn}
+        >
           <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
           Sign Up
         </button>

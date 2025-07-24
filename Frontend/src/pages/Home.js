@@ -15,8 +15,11 @@ import NotesModel from "../models/Notes";
 import { fetchNotes, createNote, updateNote, deleteNote } from "../api";
 import { useLocation } from "react-router-dom";
 import DeletingModeGreet from "../components/Greeting/DeletingModeGreet";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  //Initializing Variables
+  const navigate = useNavigate();
   const location = useLocation();
   const user = location.state?.user;
   const initialNotes = location.state?.notes || [];
@@ -29,6 +32,18 @@ function Home() {
   const [error, setError] = useState("");
   const [deletingMode, setDeletingMode] = useState(false);
   const [noteToDelete, setNoteToDelete] = useState(null);
+
+  useEffect(() => {
+    function handleBeforeUnload() {
+      if (localStorage.getItem("token") === "anonymous") {
+        localStorage.clear();
+      }
+    }
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   const postColors = [
     { name: "yellow", class: "bg-post-color-yellow" },
@@ -66,6 +81,24 @@ function Home() {
     setError("");
     try {
       const token = localStorage.getItem("token");
+      if (token === "anonymous") {
+        if (localStorage.getItem("username") === null) {
+          localStorage.clear();
+          navigate("/");
+        }
+        //let date = new Date().toISOString();
+        let newNote = NotesModel.fromJson({
+          content: "New Note",
+          color,
+          updatedAt: null,
+          _id: "anonymous",
+          username: localStorage.getItem("username") ?? "Anonymous",
+        });
+        setNotes((prevNotes) => [...prevNotes, newNote]);
+        setShowColorPicker(false);
+        setPendingNoteColor(null);
+        return;
+      }
       console.log("token", token);
       const newNote = await createNote(token, {
         content: "New Note",
@@ -88,6 +121,10 @@ function Home() {
   };
 
   const updateNoteHandler = async (id, note) => {
+    if (localStorage.getItem("token") === "anonymous") {
+      setNotes((prevNotes) => prevNotes.map((n) => (n._id === id ? note : n)));
+      return;
+    }
     console.log(" ==> updateNote", id, note);
     console.log(" ==> Setting Loading True");
     setLoading(true);
@@ -122,9 +159,18 @@ function Home() {
 
   const handleDeleteConfirm = async () => {
     if (!noteToDelete) return;
-    setLoading(true);
-    setError("");
+
+    if (localStorage.getItem("token") === "anonymous") {
+      setNotes((prevNotes) =>
+        prevNotes.filter((n) => n._id !== noteToDelete._id)
+      );
+      setNoteToDelete(null);
+      setDeletingMode(false);
+      return;
+    }
     try {
+      setLoading(true);
+      setError("");
       const token = localStorage.getItem("token");
       const res = await deleteNote(token, noteToDelete._id);
       setNotes((prevNotes) =>
@@ -159,11 +205,15 @@ function Home() {
       {/* Navbar */}
       <Navbar onAddNote={handleAddNoteClick} />
       <div className="block md:hidden w-full">
-        <MobileAppBar />
+        <MobileAppBar
+          onAddNote={handleAddNoteClick}
+          darkMode={darkMode}
+          toggleDarkMode={toggleDarkMode}
+        />
       </div>
-      {/* Theme Mode Button */}
+      {/* Theme Mode Button (desktop only) */}
       <button
-        className="themeMode text-custom-gray-300 md:text-black font-bold py-2 px-4 rounded-full transition duration-500 ease-in-out transform hover:scale-105 absolute top-4 right-4 dark:text-white md:hover:bg-custom-rose"
+        className="hidden md:block themeMode text-custom-gray-300 md:text-black font-bold py-2 px-4 rounded-full transition duration-500 ease-in-out transform hover:scale-105 absolute top-4 right-4 dark:text-white md:hover:bg-custom-rose"
         onClick={toggleDarkMode}
       >
         <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />

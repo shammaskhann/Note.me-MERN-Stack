@@ -33,7 +33,7 @@ export default function Notes({
   const handleSave = () => {
     setIsEditing(false);
     if (noteContent !== note.content && onUpdate) {
-      onUpdate(note._id, { content: noteContent });
+      onUpdate(note._id, { content: noteContent, updatedAt: null });
     }
   };
 
@@ -86,7 +86,7 @@ export default function Notes({
             Save
           </button>
         </div>
-      ) : note.updatedAt === "" ? null : (
+      ) : note.updatedAt === "" || note.updatedAt === null ? null : (
         <div className="datePosted pt-5 text-custom-gray-300 dark:text-custom-cream-white text-sm">
           <p>{formatDate(note.updatedAt)}</p>
         </div>

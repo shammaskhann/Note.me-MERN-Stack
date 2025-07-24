@@ -19,8 +19,18 @@ function Loading() {
     }, 100);
     console.log("Loading - Fetching user info token");
     const token = localStorage.getItem("token");
+
     console.log("Loading - Token:", token);
     if (token) {
+      if (token === "anonymous") {
+        navigate("/home", {
+          state: {
+            user: { username: localStorage.getItem("username") ?? "Anonymous" },
+            notes: [],
+          },
+        });
+        return;
+      }
       console.log("Loading - Fetching user info");
       fetch(API.getUser, {
         headers: {

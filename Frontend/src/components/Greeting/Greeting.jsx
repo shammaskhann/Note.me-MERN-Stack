@@ -8,8 +8,7 @@ export default function Greeting({ name }) {
       </h1>
       <h2 className="text-lg md:text-2xl text-gray-500 font-ubuntu dark:text-gray-400">
         {/* All your notes are here, in one place! */}
-        This Project is currently under development. Stay tuned for more
-        updates!
+        All your notes are here, in one place!
       </h2>
     </div>
   );

@@ -15,6 +15,11 @@ function Login() {
   useEffect(() => {
     const checkToken = async () => {
       const token = localStorage.getItem("token");
+      if (token === "anonymous") {
+        localStorage.clear();
+        navigate("/");
+        return;
+      }
       if (!token) {
         setCheckingAuth(false);
         return;
