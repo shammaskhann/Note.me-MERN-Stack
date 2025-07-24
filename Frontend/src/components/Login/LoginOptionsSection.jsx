@@ -10,6 +10,7 @@ function LoginOptionsSection({ logo, googlesvg }) {
   // Handler for Google Sign-In
   const handleGoogleSignIn = () => {
     // Redirect to backend Google OAuth endpoint
+    console.log("Google Sign-In" + API.googleAuth);
     window.location.href = API.googleAuth;
   };
 

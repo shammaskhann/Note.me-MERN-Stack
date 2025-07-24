@@ -3,12 +3,11 @@
 # dependencies
 /Backend/node_modules
 /Frontend/node_modules
-/Backend/node_modules
 
 
 # production
 /Frontend/build
-/Backend/build
+# /Backend/build
 
 #env
 /Frontend/.env

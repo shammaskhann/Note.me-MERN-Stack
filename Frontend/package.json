@@ -48,7 +48,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://shammaskhann.github.io/Note.me-MERN-Stack",
+  "homepage": "https://shammaskhann.github.io/noteme/",
   "devDependencies": {
     "tailwindcss": "^3.4.7"
   }

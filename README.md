@@ -52,15 +52,15 @@
 
 ## Deployment
 
-- **Frontend Live:** [Frontend Deployed Link](#)
-- **Backend Live:** [Backend Deployed Link](#)
+- **Frontend Live:** [https://shammaskhann.github.io/noteme/](https://shammaskhann.github.io/noteme/)
+- **Backend GitHub:** [https://github.com/shammaskhann/Note.me-MERN-Stack/tree/master/Backend](https://github.com/shammaskhann/Note.me-MERN-Stack/tree/master/Backend)
 
 ---
 
 ## GitHub Repositories
 
-- **Frontend Code:** [Frontend GitHub Link](#)
-- **Backend Code:** [Backend GitHub Link](#)
+- **Frontend Code:** [https://github.com/shammaskhann/Note.me-MERN-Stack/tree/master/Frontend](https://github.com/shammaskhann/Note.me-MERN-Stack/tree/master/Frontend)
+- **Backend Code:** [https://github.com/shammaskhann/Note.me-MERN-Stack/tree/master/Backend](https://github.com/shammaskhann/Note.me-MERN-Stack/tree/master/Backend)
 
 ---
 

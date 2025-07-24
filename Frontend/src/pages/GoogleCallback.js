@@ -5,22 +5,21 @@ function GoogleCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get the full query string
     try {
-      const params = new URLSearchParams(window.location.search);
-      console.log("window.location.search");
-      console.log(window.location.search);
-      console.log("params");
-      console.log(params.get("token"));
+      // window.location.hash: "#/google/callback?token=XYZ"
+      const hash = window.location.hash;
+      const queryString = hash.includes("?") ? hash.split("?")[1] : "";
+      const params = new URLSearchParams(queryString);
       const token = params.get("token");
       if (token) {
-        console.log("token storing in the local storage");
         localStorage.setItem("token", token);
         navigate("/loading");
+      } else {
+        alert("Google sign-in failed: No token found in URL.");
+        navigate("/");
       }
     } catch (error) {
       alert("Google sign-in failed: " + error.message);
-      console.log(error);
       navigate("/");
     }
   }, [navigate]);
