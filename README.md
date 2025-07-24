@@ -69,7 +69,7 @@
 Below are the main API endpoints as defined in [`src/api.js`](Frontend/src/api.js):
 
 ```js
-export const BASE_URL = "http://localhost:5000";
+export const BASE_URL = "https://noteme-backend-5wni.onrender.com/";
 
 export const API = {
   getUser: `${BASE_URL}/api/users/me`,
