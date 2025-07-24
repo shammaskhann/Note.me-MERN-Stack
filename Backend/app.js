@@ -15,8 +15,8 @@ app.use(morgan("dev"));
 app.use(passport.initialize());
 
 // Routes
-app.use("/api/notes", notesRouter);
-app.use("/api/users", usersRouter);
+app.use("api/notes", notesRouter);
+app.use("api/users", usersRouter);
 
 // 404 handler
 app.use((req, res, next) => {
