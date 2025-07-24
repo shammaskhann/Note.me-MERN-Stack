@@ -34,19 +34,19 @@
 
 ### Login Page
 
-![Login Page](assets/iamge.png)
+![Login Page](assets/image.png)
 
 ### Home Page (Light Mode)
 
-![Home Light](assets/image2.png)
+![Home Light](assets/image1.png)
 
 ### Home Page (Dark Mode)
 
-![Home Dark](assets/image3.png)
+![Home Dark](assets/image2.png)
 
 ### Select Note Color
 
-![Note Color](assets/image4.png)
+![Note Color](assets/image3.png)
 
 ---
 
@@ -92,13 +92,3 @@ export const API = {
 2. Install dependencies in both `Frontend` and `Backend`
 3. Set up your `.env` files as needed
 4. Run backend and frontend servers
-
----
-
-## License
-
-MIT
-
----
-
-> **Edit the deployment and code links above as needed.**
