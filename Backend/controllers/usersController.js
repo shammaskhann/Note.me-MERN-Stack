@@ -24,7 +24,7 @@ exports.googleAuthCallback = async (req, res, next) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-    const frontendUrl = "http://localhost:3000/google/callback";
+    const frontendUrl = "https://shammaskhann.github.io/noteme/google/callback";
     res.redirect(`${frontendUrl}?token=${token}`);
   } catch (err) {
     next(err);
